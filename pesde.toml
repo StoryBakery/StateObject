@@ -32,6 +32,10 @@ msgpack-luau = { wally = "cipharius/msgpack-luau", version = "^0.3.0" }
 
 [scripts]
 roblox_sync_config_generator = ".pesde/scripts/roblox_sync_config_generator.luau"
+sourcemap_generator = ".pesde/scripts/sourcemap_generator.luau"
+
+[dev_dependencies]
+scripts = { name = "pesde/scripts_rojo", version = "^0.2.0", target = "lune" }
 
 [engines]
 pesde = "^0.7.0"
