@@ -81,7 +81,7 @@ index_url = "https://github.com/pesde-pkg/index"
 [graph."pesde/rojo@7.6.1 lune".dependencies]
 option = ["lukadev_0/option@1.2.1 lune", "standard"]
 result = ["lukadev_0/result@1.2.1 lune", "standard"]
-toolchainlib = ["pesde/toolchainlib@0.2.1 lune", "standard"]
+toolchainlib = ["pesde/toolchainlib@0.2.2 lune", "standard"]
 
 [graph."pesde/rojo@7.6.1 lune".pkg_ref]
 ref_ty = "pesde"
@@ -119,18 +119,18 @@ index_url = "https://github.com/pesde-pkg/index"
 rojo = [{ name = "pesde/rojo", version = "^7.5.1", index = "https://github.com/pesde-pkg/index" }, "peer"]
 scripts_core = [{ name = "pesde/scripts_core", version = "^0.2.0", index = "https://github.com/pesde-pkg/index", target = "lune" }, "standard"]
 
-[graph."pesde/toolchainlib@0.2.1 lune".dependencies]
+[graph."pesde/toolchainlib@0.2.2 lune".dependencies]
 dirs = ["jiwonz/dirs@0.6.0 lune", "standard"]
 option = ["lukadev_0/option@1.2.1 lune", "peer"]
 pathfs = ["jiwonz/pathfs@0.6.0 lune", "standard"]
 result = ["lukadev_0/result@1.2.1 lune", "peer"]
 unzip = ["0x5eal/unzip@0.2.0 luau", "standard"]
 
-[graph."pesde/toolchainlib@0.2.1 lune".pkg_ref]
+[graph."pesde/toolchainlib@0.2.2 lune".pkg_ref]
 ref_ty = "pesde"
 index_url = "https://github.com/pesde-pkg/index"
 
-[graph."pesde/toolchainlib@0.2.1 lune".pkg_ref.dependencies]
+[graph."pesde/toolchainlib@0.2.2 lune".pkg_ref.dependencies]
 dirs = [{ name = "jiwonz/dirs", version = "^0.6.0", index = "https://github.com/pesde-pkg/index" }, "standard"]
 option = [{ name = "lukadev_0/option", version = "^1.2.1", index = "https://github.com/pesde-pkg/index" }, "peer"]
 pathfs = [{ name = "jiwonz/pathfs", version = "^0.6.0", index = "https://github.com/pesde-pkg/index" }, "standard"]
@@ -143,8 +143,11 @@ direct = ["CFrameUtil", { repo = "https://github.com/StoryBakery/CframeUtil", re
 [graph."story_bakery/cframe_util@0.1.0 roblox".pkg_ref]
 ref_ty = "git"
 repo = "https://github.com/StoryBakery/CframeUtil"
-tree_id = "5c2528a1819f685ddf2e056b0c6dfef6784289c3"
+tree_id = "a7c3f5344a731da5cf400680140599b1ef97c8e9"
 new_structure = true
+
+[graph."story_bakery/cframe_util@0.1.0 roblox".pkg_ref.dependencies]
+scripts = [{ name = "pesde/scripts_rojo", version = "^0.2.0", index = "https://github.com/pesde-pkg/index", target = "lune" }, "dev"]
 
 [graph."story_bakery/signal@0.1.0 roblox"]
 direct = ["Signal", { repo = "https://github.com/StoryBakery/Signal", rev = "main" }, "standard"]
