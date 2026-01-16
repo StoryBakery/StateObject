@@ -1,4 +1,4 @@
-name = "story_bakery/state_object"
+name = "storybakery/state_object"
 version = "0.1.0"
 license = "MIT"
 includes = [
