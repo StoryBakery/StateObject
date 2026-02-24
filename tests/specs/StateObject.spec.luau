@@ -180,12 +180,12 @@ describe("StateObject.SaveUtil", function()
 			Health = {
 				Default = 100,
 			},
-			LocalOnly = {
-				Default = "Secret",
-				Metadata = {
-					SyncWithInstance = false,
+				LocalOnly = {
+					Default = "Secret",
+					Metadata = {
+						AttributeSyncEnabled = false,
+					},
 				},
-			},
 		}, {
 			ChangedBehavior = "Immediate",
 		})

@@ -197,7 +197,7 @@ end
 	초기 동기화에서 `Attribute` 가 없으면 [[StateObject]]의 현재 값을 `Attribute` 에 기록합니다.
 	초기 동기화에서 `Attribute` 가 이미 있으면 `Attribute` 값을 디코드해 [[StateObject]]에 반영합니다.
 	이후에는 `Attribute` 변경과 [[StateObject]] 변경을 서로 반대편에 전파해 양방향 동기화를 유지합니다.
-	`stateInfo.Metadata.SyncWithInstance == false`인 키는 동기화 대상에서 제외됩니다.
+	`stateInfo.Metadata.AttributeSyncEnabled == false`인 키는 동기화 대상에서 제외됩니다.
 	내부 플래그로 자기 자신이 유발한 변경은 무시해 순환 갱신을 방지합니다.
 	
 	@param stateObject - 동기화할 상태 객체.
@@ -215,7 +215,7 @@ function StateObjectSaveUtil.BindStateObjectAndInstanceAttributes(
 	for key, stateInfo in stateObject:GetStateInfosByKey() do
 		local metadata = stateInfo.Metadata
 
-		if metadata and metadata.SyncWithInstance == false then
+		if metadata and metadata.AttributeSyncEnabled == false then
 			continue
 		end
 
