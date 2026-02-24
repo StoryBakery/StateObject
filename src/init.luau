@@ -12,8 +12,8 @@ StateObjectModule.new = Class.new
 StateObjectModule.fromDefaultValuesByKey = Class.fromDefaultValuesByKey
 StateObjectModule.IsStateObject = Class.IsStateObject
 
-StateObjectModule.GetCustomStateObjectTypeAnnotation =
-	require("@self/GetCustomStateObjectTypeAnnotation")
+StateObjectModule.GenerateCustomStateObjectTypeAnnotation =
+	require("@self/GenerateCustomStateObjectTypeAnnotation")
 
 StateObjectModule.SaveUtil = require("@self/SaveUtil")
 

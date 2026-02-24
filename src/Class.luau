@@ -25,7 +25,7 @@ export type StateInfo<Value = any> = {
 		self: setmetatable<{ [string]: any }, typeof(StateObject)>,
 		new: Value
 	) -> ())?,
-	_isReadyToFireChanged: boolean?,
+	isChangeDispatchScheduled: boolean?,
 }
 
 export type ChangedBehavior = "Immediate" | "Deferred"
@@ -225,19 +225,19 @@ function StateObject:Set(key: string, value: any)
 	end
 
 	stateInfo.Value = value
-	if stateInfo._isReadyToFireChanged then
+	if stateInfo.isChangeDispatchScheduled then
 		return
 	end
 
 	if self.ChangedBehavior == "Deferred" then
-		stateInfo._isReadyToFireChanged = true
+		stateInfo.isChangeDispatchScheduled = true
 		task.defer(function()
 			local currentValue = stateInfo.Value
 			if currentValue ~= lastValue then
 				stateInfo.Changed:Fire(currentValue)
 				self.Changed:Fire(key, currentValue)
 			end
-			stateInfo._isReadyToFireChanged = nil
+			stateInfo.isChangeDispatchScheduled = nil
 		end)
 	else
 		if value ~= lastValue then
@@ -484,13 +484,5 @@ function StateObject.IsStateObject(stateObject: StateObject | any): boolean
 	local metatable = getmetatable(stateObject)
 	return metatable == StateObject
 end
-
-local a = StateObject.new({
-	Name = {
-		Default = "ASd",
-	},
-})
-
-local b: CustomStateObject
 
 return StateObject

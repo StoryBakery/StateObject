@@ -41,7 +41,7 @@ local function getInstanceFromPath(path: { string })
 	return instance
 end
 
-local function toStringOrNumberTable(v: any, vType: string)
+local function encodeByType(v: any, vType: string)
 	if vType == "Instance" then
 		return getInstancePath(v)
 	elseif vType == "Color3" then
@@ -67,7 +67,7 @@ local function toStringOrNumberTable(v: any, vType: string)
 	error("Unsupported type: " .. vType)
 end
 
-local function fromStringOrNumberTable(v, vType: string): any
+local function decodeByType(v, vType: string): any
 	if vType == "Instance" then
 		return getInstanceFromPath(v)
 	elseif vType == "Color3" then
@@ -93,20 +93,20 @@ local function fromStringOrNumberTable(v, vType: string): any
 	error("Unsupported type: " .. vType)
 end
 
-local function elementsToNumberOrStringTable(t: { [any]: any }): { [any]: any }
+local function encodeTableElements(t: { [any]: any }): { [any]: any }
 	local new = {}
 	for k, v in t do
 		local vType = typeof(v)
 		if vType == "table" then
-			new[k] = elementsToNumberOrStringTable(v)
+			new[k] = encodeTableElements(v)
 		else
-			new[k] = toStringOrNumberTable(v, vType)
+			new[k] = encodeByType(v, vType)
 		end
 	end
 	return new
 end
 
-local function elementsFromNumberOrStringTables(
+local function decodeTableElements(
 	t: { [any]: any },
 	refToGetOriginalType: any
 ): { [any]: any }
@@ -118,9 +118,9 @@ local function elementsFromNumberOrStringTables(
 		local originalType = if referenceValue == nil then typeof(v) else typeof(referenceValue)
 
 		if originalType == "table" and typeof(v) == "table" then
-			new[k] = elementsFromNumberOrStringTables(v, referenceValue)
+			new[k] = decodeTableElements(v, referenceValue)
 		else
-			new[k] = fromStringOrNumberTable(v, originalType)
+			new[k] = decodeByType(v, originalType)
 		end
 	end
 	return new
@@ -138,7 +138,7 @@ local StateObjectSaveUtil = {}
 function StateObjectSaveUtil.EncodeValue(value: any, stateInfo: StateObject.StateInfo)
 	local metadata = stateInfo.Metadata
 	if metadata and metadata.IsInstance then
-		local instancePath = toStringOrNumberTable(value, "Instance")
+		local instancePath = encodeByType(value, "Instance")
 		if instancePath == nil then
 			return nil
 		end
@@ -147,7 +147,7 @@ function StateObjectSaveUtil.EncodeValue(value: any, stateInfo: StateObject.Stat
 
 	local valueType = typeof(stateInfo.Default)
 	if valueType == "table" then
-		return HttpService:JSONEncode(elementsToNumberOrStringTable(value))
+		return HttpService:JSONEncode(encodeTableElements(value))
 	end
 
 	return value
@@ -169,7 +169,7 @@ function StateObjectSaveUtil.DecodeValue(encoded: any, stateInfo: StateObject.St
 			return nil
 		end
 		local instancePath = HttpService:JSONDecode(value)
-		return fromStringOrNumberTable(instancePath, "Instance")
+		return decodeByType(instancePath, "Instance")
 	end
 
 	if typeof(stateInfo.Default) ~= "table" then
@@ -181,7 +181,7 @@ function StateObjectSaveUtil.DecodeValue(encoded: any, stateInfo: StateObject.St
 	end
 
 	value = HttpService:JSONDecode(value)
-	value = elementsFromNumberOrStringTables(value, stateInfo.Default)
+	value = decodeTableElements(value, stateInfo.Default)
 
 	if metadata and metadata.MergeWithDefaultOnStart then
 		return TableUtil.merge(stateInfo.Default, value)

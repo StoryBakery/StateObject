@@ -57,7 +57,7 @@ local function getSortedStateKeys(stateObject, stateInfosByKey)
 	return stateKeys
 end
 
-local function GetCustomStateObjectTypeAnnotation(
+local function GenerateCustomStateObjectTypeAnnotation(
 	stateObject,
 	moduleName: string?
 ): string
@@ -114,4 +114,4 @@ local function GetCustomStateObjectTypeAnnotation(
 	return `{resolvedModuleName}.CustomStateObject<\n{table.concat(genericArguments, `,\n`)}\n>`
 end
 
-return GetCustomStateObjectTypeAnnotation
+return GenerateCustomStateObjectTypeAnnotation
