@@ -24,11 +24,8 @@ default = "https://github.com/pesde-pkg/index"
 default = "https://github.com/UpliftGames/wally-index"
 
 [dependencies]
-Signal = { repo = "https://github.com/StoryBakery/Signal", rev = "main" }
-TableUtil = { repo = "https://github.com/StoryBakery/TableUtil", rev = "main" }
-CFrameUtil = { repo = "https://github.com/StoryBakery/CframeUtil", rev = "main" }
-vide = { name = "centau/vide", version = "^0.3.1-test.1" }
-msgpack-luau = { wally = "cipharius/msgpack-luau", version = "^0.3.0" }
+Signal = { repo = "https://github.com/StoryBakery/Signal", rev = "v0.1.0" }
+TableUtil = { repo = "https://github.com/StoryBakery/TableUtil", rev = "v0.1.0" }
 
 [scripts]
 roblox_sync_config_generator = ".pesde/scripts/roblox_sync_config_generator.luau"
